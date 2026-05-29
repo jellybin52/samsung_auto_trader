@@ -13,7 +13,7 @@ class APIClient:
     """Korea Investment Open API를 호출하는 HTTP 클라이언트."""
 
     def __init__(self):
-        self.base_url = config.KIS_VIRTUAL_BASE_URL  # Mock trading 사용
+        self.base_url = config.BASE_URL
         self.timeout = config.REQUEST_TIMEOUT_SECONDS
         self.max_retries = config.MAX_RETRIES
 
@@ -47,7 +47,7 @@ class APIClient:
                     headers=headers,
                     json=json_body,
                     timeout=self.timeout,
-                    verify=False  # 테스트 환경에서 SSL 검증 비활성화
+                    verify=config.VERIFY_SSL
                 )
                 response.raise_for_status()
 
@@ -93,7 +93,7 @@ class APIClient:
                     headers=headers,
                     params=params,
                     timeout=self.timeout,
-                    verify=False
+                    verify=config.VERIFY_SSL
                 )
                 response.raise_for_status()
 

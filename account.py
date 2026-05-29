@@ -53,7 +53,7 @@ def get_account_info() -> Optional[AccountInfo]:
             "authorization": f"Bearer {token}",
             "appKey": app_key,
             "appSecret": app_secret,
-            "tr_id": "VTTC8434R",
+            "tr_id": config.TR_IDS["HOLDINGS"],
             "custtype": "P",
         }
 

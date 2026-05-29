@@ -72,20 +72,13 @@ class Trader:
             quantity=self.order_quantity
         )
 
-        if not buy_result.success:
-            logger.warning(f"매수 주문 실패: {buy_result.message}")
-            # 계속 진행할지 중단할지는 정책에 따라 결정
-            # 현재는 계속 진행
+        if buy_result.success:
+            logger.info(f"매수 주문 완료: {buy_result.order_id}. 체결 대기가 필요할 수 있습니다.")
         else:
-            # 4. 매수 후 계좌 상태 확인
-            account_after_buy = get_account_info()
-            if account_after_buy:
-                logger.info(
-                    f"매수 후 상태: 현금={account_after_buy.cash_balance}, 보유={account_after_buy.holdings}, "
-                    f"매도 가능={account_after_buy.sellable_holdings}"
-                )
-            else:
-                account_after_buy = None
+            logger.warning(f"매수 주문 실패: {buy_result.message}")
+
+        # 4 & 5. 매도 주문 준비 (이미 보유 중인 주식이 있을 수 있으므로 account_before 활용)
+        account_after_buy = account_before
 
         # 5. 매도 주문
         sell_result = OrderResult()

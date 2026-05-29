@@ -109,7 +109,7 @@ def _place_order(
             "authorization": f"Bearer {token}",
             "appKey": app_key,
             "appSecret": app_secret,
-            "tr_id": "VTTC0802U" if order_type == "BUY" else "VTTC0801U",
+            "tr_id": config.TR_IDS["BUY"] if order_type == "BUY" else config.TR_IDS["SELL"],
             "custtype": "P",
         }
 
@@ -197,7 +197,7 @@ def check_order_status(
             "authorization": f"Bearer {token}",
             "appKey": app_key,
             "appSecret": app_secret,
-            "tr_id": "VTTC8001R",
+            "tr_id": config.TR_IDS["ORDER_STATUS"],
             "custtype": "P",
         }
 
