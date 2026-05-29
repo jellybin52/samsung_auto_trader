@@ -29,8 +29,8 @@ def get_current_price(stock_code: str = config.TARGET_STOCK) -> Optional[int]:
         headers = {
             "Content-Type": "application/json",
             "authorization": f"Bearer {token}",
-            "appKey": app_key,
-            "appSecret": app_secret,
+            "appkey": app_key,
+            "appsecret": app_secret,
             "tr_id": config.TR_IDS["PRICE"],
             "custtype": "P",
         }

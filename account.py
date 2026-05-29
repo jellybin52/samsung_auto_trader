@@ -51,8 +51,8 @@ def get_account_info() -> Optional[AccountInfo]:
         headers = {
             "Content-Type": "application/json",
             "authorization": f"Bearer {token}",
-            "appKey": app_key,
-            "appSecret": app_secret,
+            "appkey": app_key,
+            "appsecret": app_secret,
             "tr_id": config.TR_IDS["HOLDINGS"],
             "custtype": "P",
         }

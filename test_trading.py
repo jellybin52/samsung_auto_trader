@@ -10,6 +10,7 @@ from auth import get_auth_token
 from market_data import get_current_price
 from account import get_account_info
 from trader import Trader
+from main import load_environment
 
 def test_authentication():
     """토큰 발급 테스트."""
@@ -93,6 +94,26 @@ def test_trading_logic():
         return False
 
 
+def test_full_cycle_execution():
+    """실제 거래 사이클 1회 실행 테스트."""
+    logger.info("\n" + "=" * 60)
+    logger.info("5. 실제 거래 사이클 실행 테스트 (주문 포함)")
+    logger.info("=" * 60)
+    
+    try:
+        trader = Trader()
+        # 현재 시간과 상관없이 강제로 1회 사이클 실행
+        success = trader.execute_trading_cycle()
+        if success:
+            logger.info("✓ 거래 사이클 실행 완료 (최소 한 건 이상의 주문이 접수되었습니다)")
+        else:
+            logger.warning("⚠ 거래 사이클 실행 완료: 주문이 접수되지 않았거나 실패했습니다")
+        return True
+    except Exception as e:
+        logger.error(f"✗ 거래 사이클 실행 중 오류 발생: {e}")
+        return False
+
+
 def main():
     """모든 테스트 실행."""
     logger.info("\n")
@@ -100,6 +121,13 @@ def main():
     logger.info("║" + " 삼성 자동 거래 시스템 - 통합 테스트 시작".center(58) + "║")
     logger.info("╚" + "=" * 58 + "╝")
     
+    # 환경 변수 로드
+    try:
+        load_environment()
+    except Exception as e:
+        logger.error(f"환경 설정 로드 실패: {e}")
+        return
+
     results = []
     
     # 테스트 실행
@@ -107,6 +135,7 @@ def main():
     results.append(("주가 조회", test_market_data()))
     results.append(("계좌 조회", test_account()))
     results.append(("거래 로직", test_trading_logic()))
+    results.append(("사이클 실행", test_full_cycle_execution()))
     
     # 결과 요약
     logger.info("\n" + "=" * 60)

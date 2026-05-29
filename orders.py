@@ -107,8 +107,8 @@ def _place_order(
         headers = {
             "Content-Type": "application/json",
             "authorization": f"Bearer {token}",
-            "appKey": app_key,
-            "appSecret": app_secret,
+            "appkey": app_key,
+            "appsecret": app_secret,
             "tr_id": config.TR_IDS["BUY"] if order_type == "BUY" else config.TR_IDS["SELL"],
             "custtype": "P",
         }
@@ -195,8 +195,8 @@ def check_order_status(
         headers = {
             "Content-Type": "application/json",
             "authorization": f"Bearer {token}",
-            "appKey": app_key,
-            "appSecret": app_secret,
+            "appkey": app_key,
+            "appsecret": app_secret,
             "tr_id": config.TR_IDS["ORDER_STATUS"],
             "custtype": "P",
         }
