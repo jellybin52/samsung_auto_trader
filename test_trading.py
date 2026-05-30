@@ -108,7 +108,7 @@ def test_full_cycle_execution():
             logger.info("✓ 거래 사이클 실행 완료 (최소 한 건 이상의 주문이 접수되었습니다)")
         else:
             logger.warning("⚠ 거래 사이클 실행 완료: 주문이 접수되지 않았거나 실패했습니다")
-        return True
+        return success
     except Exception as e:
         logger.error(f"✗ 거래 사이클 실행 중 오류 발생: {e}")
         return False

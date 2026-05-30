@@ -123,9 +123,11 @@ def _place_order(
             "ORD_DVSN": "00",  # 주문 구분 00: 지정가
             "ORD_QTY": str(quantity),
             "ORD_UNPR": str(price),
-            "EXCG_ID_DVSN_CD": "KRX",
-            "SLL_TYPE": "01" if order_type == "SELL" else "",
         }
+
+        if order_type == "SELL":
+            # 매도 주문일 경우에만 매도 유형 추가
+            body["SLL_TYPE"] = "01"
 
         logger.info(
             f"{order_type} 주문 요청: {stock_code} x {quantity} @ {price} KRW"
