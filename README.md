@@ -15,6 +15,26 @@
 
 본 프로젝트는 유지보수와 확장성을 고려하여 **관심사 분리(Separation of Concerns)** 원칙에 따라 모듈화되었습니다.
 
+### 0. 시스템 흐름도 (Execution Sequence)
+
+```mermaid
+sequenceDiagram
+    participant M as Main Loop
+    participant A as Auth Manager
+    participant T as Trader
+    participant K as KIS API Server
+
+    M->>A: 토큰 요청 (get_auth_token)
+    A->>A: 캐시 확인 (token_cache.json)
+    alt 토큰 만료됨
+        A->>K: 새 토큰 발급 요청
+        K-->>A: Access Token 반환
+    end
+    M->>T: 거래 사이클 실행 (execute_trading_cycle)
+    T->>K: 현재가 조회/계좌 조회/주문 송신
+    K-->>T: 처리 결과 반환
+```
+
 ### 1. 프로그램 워크플로우 (Data Flow)
 1.  **초기화**: `main.py` 실행 시 환경 변수(`GH_APPKEY` 등)를 로드하고 `Trader` 객체를 생성합니다.
 2.  **스케줄링**: `pytz`를 이용해 한국 시간(KST)을 계산하고, 장 운영 시간(09:10~15:30)인지 매 순간 체크합니다.
