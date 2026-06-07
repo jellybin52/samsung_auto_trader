@@ -34,10 +34,13 @@ def load_environment():
     """
     # 로컬 환경에서 개발할 때 .env 파일 지원 (선택사항)
     try:
-        from dotenv import load_dotenv
         if os.path.exists('.env'):
+            from dotenv import load_dotenv
             load_dotenv()
-    except ImportError:
+            logger.info(".env 파일에서 환경 변수를 로드했습니다.")
+        else:
+            logger.info("시스템 환경 변수(Codespaces Secrets 등)를 확인합니다.")
+    except Exception:
         pass
 
     required_vars = ['GH_ACCOUNT', 'GH_APPKEY', 'GH_APPSECRET']
